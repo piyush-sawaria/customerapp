@@ -39,7 +39,23 @@ export default class CustomerList extends Component {
     render() {
         return <div>
             <Filter />
-            {this.state.customers.map(customer => <CustomerRow customer={customer}/>)}
+            {this.state.customers.map(customer => 
+                <CustomerRow 
+                    key={customer.id}
+                    delEvent={(id) => this.deleteCustomer(id)}
+                    customer={customer}
+                />
+            )}
         </div>
+    }
+
+    deleteCustomer(id) {
+        let custs = this.state.customers.filter(c => c.id !== id);
+        // reconcillation
+        // this.state.customers = custs => won't trigger reconcillation
+        // async function to update state and trigger reconcillation
+        this.setState({
+            customers: custs
+        }, () => console.log("deleted!!!"))
     }
 }
