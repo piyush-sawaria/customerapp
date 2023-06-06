@@ -38,7 +38,7 @@ export default class CustomerList extends Component {
 
     render() {
         return <div>
-            <Filter />
+            <Filter filterEvent={(txt) => this.filterCustomer(txt)}/>
             {this.state.customers.map(customer => 
                 <CustomerRow 
                     key={customer.id}
@@ -47,6 +47,13 @@ export default class CustomerList extends Component {
                 />
             )}
         </div>
+    }
+
+    filterCustomer(txt) {
+        let custs = this.state.customers.filter(c => c.lastName.toLowerCase().indexOf(txt.toLowerCase()) >= 0);
+        this.setState({
+            customers: custs
+        })
     }
 
     deleteCustomer(id) {
